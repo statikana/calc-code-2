@@ -23,7 +23,7 @@ class Constant(Node):
     def __add__(self, other: object) -> Self | Add[Self, Node] | NotImplementedType:
         match other:
             case Constant():
-                return Constant(self.value + other.value)
+                return self.__class__(self.value + other.value)
             case Node():
                 return Add(self, other)
             case _:
