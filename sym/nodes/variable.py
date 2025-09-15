@@ -1,20 +1,16 @@
-from __future__ import annotations
-from typing import Self, overload
-from .. import *
 
 
-__all__ = ["Constant"]
-  
-
-class Constant(Node):
-    def __init__(self, value: float):
+class Variable(Node):
+    def __init__(self, name: str, value: Constant | None = None):
+        self.name = name
         self.value = value
 
     def __repr__(self):
-        return str(self.value)
+        return f"{self.name}={self.value or ''}"
 
     def latex_inline(self):
-        return str(self.value)
+        return self.name
+    
 
     def __add__(self, other: NodeT) -> Add[Self, NodeT]:
         return Add(self, other)

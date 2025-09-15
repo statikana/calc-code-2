@@ -1,11 +1,13 @@
 from __future__ import annotations
 from typing import Generic, TypeVar
-from .. import *
-
+from .core import Node
 
 NodeT = TypeVar("NodeT", bound=Node)
 LHSNodeT = TypeVar("LHSNodeT", bound=Node)
 RHSNodeT = TypeVar("RHSNodeT", bound=Node)
+
+
+__all__ = ["Operator", "Add", "Sub", "Mul", "Div", "Pow", "Derivative", "Integral"]
 
 
 class Operator(Node):
@@ -74,20 +76,21 @@ class Pow(Generic[LHSNodeT, RHSNodeT]):
 
 ExpressionT = TypeVar("ExpressionT", bound=Node)
 RespectT = TypeVar("RespectT", bound=Node)
+OrderT = TypeVar("OrderT", bound=Node)
 
 
-class Derivative(Operator, Generic[ExpressionT, RespectT]):
+class Derivative(Operator, Generic[ExpressionT, RespectT, OrderT]):
     def __init__(
-        self, expr: ExpressionT, respect: RespectT, order: Constant | None = None
+        self, expr: ExpressionT, respect: RespectT, order: OrderT | None = None
     ):
         self.expr = expr
         self.respect = respect
-        self.order = order or Constant(1)
+        self.order = order
 
     def latex_inline(self):
         expr_latex = self.expr.latex_inline()
         respect_latex = self.respect.latex_inline()
-        is_short = isinstance(self.expr, (Variable, Constant))
+        is_short = len(expr_latex) == 1
 
         if self.order == 1:
             return (
