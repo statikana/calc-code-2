@@ -1,12 +1,10 @@
-from __future__ import annotations
-from typing import Self, overload
 from .. import *
 
 
 __all__ = ["Constant"]
   
 
-class Constant(Node):
+class Constant(AriNode):
     def __init__(self, value: float):
         self.value = value
 
@@ -15,18 +13,3 @@ class Constant(Node):
 
     def latex_inline(self):
         return str(self.value)
-
-    def __add__(self, other: NodeT) -> Add[Self, NodeT]:
-        return Add(self, other)
-
-    def __sub__(self, other: NodeT) -> Sub[Self, NodeT]:
-        return Sub(self, other)
-
-    def __mul__(self, other: NodeT) -> Mul[Self, NodeT]:
-        return Mul(self, other)
-
-    def __truediv__(self, other: NodeT) -> Div[Self, NodeT]:
-        return Div(self, other)
-
-    def __pow__(self, other: NodeT) -> Pow[Self, NodeT]:
-        return Pow(self, other)

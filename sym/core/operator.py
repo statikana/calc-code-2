@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Generic, TypeVar
-from .core import Node
+from .node import Node
 
 NodeT = TypeVar("NodeT", bound=Node)
 LHSNodeT = TypeVar("LHSNodeT", bound=Node)

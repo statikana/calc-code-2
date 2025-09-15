@@ -17,11 +17,5 @@ class Node:
     def latex_inline(self) -> str:
         return NotImplemented
 
-    def simplify(self) -> Node:
-        return NotImplemented  # TODO
-
-    def derive(self, respect: ..., order: ...) -> ...:
-        return NotImplemented
-
 
 NodeT = TypeVar("NodeT", bound=Node)
