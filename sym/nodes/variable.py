@@ -13,5 +13,5 @@ class Variable(ArithmaticNode):
     def __repr__(self):
         return f"{self.name}={self.value or ''}"
 
-    def latex_inline(self):
+    def to_latex_inline(self):
         return self.name

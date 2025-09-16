@@ -10,7 +10,7 @@ class Node:
     def latex(
         self,
     ) -> str:
-        return f"\\[\n{self.latex_inline()}\n\\]"
+        return f"\\[\n{self.to_latex_inline()}\n\\]"
 
-    def latex_inline(self) -> str:
+    def to_latex_inline(self) -> str:
         return NotImplemented

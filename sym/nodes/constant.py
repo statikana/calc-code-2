@@ -1,4 +1,4 @@
-from .. import *
+from .. import ArithmaticNode
 
 
 __all__ = ["Constant"]
@@ -8,8 +8,8 @@ class Constant(ArithmaticNode):
     def __init__(self, value: float):
         self.value = value
 
-    def __repr__(self):
-        return str(self.value)
+    def __neg__(self):
+        return Constant(-self.value)
 
-    def latex_inline(self):
+    def to_latex_inline(self):
         return str(self.value)

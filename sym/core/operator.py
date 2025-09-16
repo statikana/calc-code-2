@@ -32,8 +32,8 @@ class Add[LHSNodeT: Node, RHSNodeT: Node](Operator):
     def __repr__(self):
         return f"{self.lhs} + {self.rhs}"
 
-    def latex_inline(self):
-        return f"{self.lhs.latex_inline()} + {self.rhs.latex_inline()}"
+    def to_latex_inline(self):
+        return f"{self.lhs.to_latex_inline()} + {self.rhs.to_latex_inline()}"
 
 
 class Sub[LHSNodeT: Node, RHSNodeT: Node](Operator):
@@ -44,9 +44,10 @@ class Sub[LHSNodeT: Node, RHSNodeT: Node](Operator):
     def __repr__(self):
         return f"{self.lhs} - {self.rhs}"
 
-    def latex_inline(self):
-        return f"{self.lhs.latex_inline()} - {self.rhs.latex_inline()}"
-    
+    def to_latex_inline(self):
+        return f"{self.lhs.to_latex_inline()} - {self.rhs.to_latex_inline()}"
+
+
 class Mul[LHSNodeT: Node, RHSNodeT: Node](Operator):
     def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
         self.lhs = lhs
@@ -55,18 +56,19 @@ class Mul[LHSNodeT: Node, RHSNodeT: Node](Operator):
     def __repr__(self):
         return f"{self.lhs} * {self.rhs}"
 
-    def latex_inline(self):
-        return f"{self.lhs.latex_inline()} * {self.rhs.latex_inline()}"
+    def to_latex_inline(self):
+        return f"{self.lhs.to_latex_inline()} * {self.rhs.to_latex_inline()}"
 
-# class Product[*FactorT: [Node, ...]](Operator):
-#     def __init__(self, factors: tuple[*FactorT]):
-#         self.factors = factors 
 
-#     def __repr__(self):
-#         return " * ".join(map(str, self.factors))
+class Product[*FactorT](Operator):  # TODO constraints for variac type parameter?
+    def __init__(self, factors: tuple[*FactorT]):
+        self.factors: tuple[Node, ...] = factors  # type: ignore
 
-#     def latex_inline(self):
-#         return " * ".join(map(lambda f: f.latex_inline(), self.factors))
+    def __repr__(self):
+        return " * ".join(map(str, self.factors))
+
+    def to_latex_inline(self):
+        return " * ".join(map(lambda f: f.to_latex_inline(), self.factors))
 
 
 class Div[LHSNodeT: Node, RHSNodeT: Node]:
@@ -77,20 +79,20 @@ class Div[LHSNodeT: Node, RHSNodeT: Node]:
     def __repr__(self):
         return f"{self.lhs} / {self.rhs}"
 
-    def latex_inline(self):
-        return f"\\frac{{{self.lhs.latex_inline()}}}{{{self.rhs.latex_inline()}}}"
+    def to_latex_inline(self):
+        return f"\\frac{{{self.lhs.to_latex_inline()}}}{{{self.rhs.to_latex_inline()}}}"
 
 
-class Pow[LHSNodeT: Node, RHSNodeT: Node]:
-    def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
-        self.lhs = lhs
-        self.rhs = rhs
+class Pow[BaseT: Node, ExponentT: Node]:
+    def __init__(self, base: BaseT, exponent: ExponentT):
+        self.base = base
+        self.exponent = exponent
 
     def __repr__(self):
-        return f"{self.lhs} ^ {self.rhs}"
+        return f"{self.base} ^ {self.exponent}"
 
-    def latex_inline(self):
-        return f"{self.lhs.latex_inline()}^{{{self.rhs.latex_inline()}}}"
+    def to_latex_inline(self):
+        return f"{self.base.to_latex_inline()}^{{{self.exponent.to_latex_inline()}}}"
 
 
 class Derivative[ExpressionT: Node, RespectT: Node, OrderT: Node](Operator):
@@ -101,9 +103,9 @@ class Derivative[ExpressionT: Node, RespectT: Node, OrderT: Node](Operator):
         self.respect = respect
         self.order = order
 
-    def latex_inline(self):
-        expr_latex = self.expr.latex_inline()
-        respect_latex = self.respect.latex_inline()
+    def to_latex_inline(self):
+        expr_latex = self.expr.to_latex_inline()
+        respect_latex = self.respect.to_latex_inline()
         is_short = len(expr_latex) == 1
 
         if self.order == 1:
@@ -133,13 +135,13 @@ class Integral[ExpressionT: Node, RespectT: Node, LowerT: Node, UpperT: Node](Op
         self.lower = lower
         self.upper = upper
 
-    def latex_inline(self):
-        expr_latex = self.expr.latex_inline()
-        respect_latex = self.respect.latex_inline()
+    def to_latex_inline(self):
+        expr_latex = self.expr.to_latex_inline()
+        respect_latex = self.respect.to_latex_inline()
 
         if self.lower is not None and self.upper is not None:
-            lower_latex = self.lower.latex_inline()
-            upper_latex = self.upper.latex_inline()
+            lower_latex = self.lower.to_latex_inline()
+            upper_latex = self.upper.to_latex_inline()
             return f"\\int_{{{lower_latex}}}^{{{upper_latex}}} {expr_latex} \\, d{respect_latex}"
         else:
             return f"\\int {expr_latex} \\, d{respect_latex}"

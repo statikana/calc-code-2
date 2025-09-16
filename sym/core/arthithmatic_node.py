@@ -1,14 +1,6 @@
 from typing import Self, Optional
 from .node import Node
-from .operator import (
-    Add,
-    Sub,
-    Mul,
-    Div,
-    Pow,
-    Derivative,
-    Integral
-)
+from .operator import Add, Sub, Mul, Div, Pow, Derivative, Integral
 
 
 __all__ = ["ArithmaticNode"]
@@ -38,6 +30,9 @@ class ArithmaticNode(Node):
         return Derivative(self, respect, order)
 
     def integrate[RespectT: Node, LowerT: Node, UpperT: Node](
-        self, respect: RespectT, lower: Optional[LowerT] = None, upper: Optional[UpperT] = None
+        self,
+        respect: RespectT,
+        lower: Optional[LowerT] = None,
+        upper: Optional[UpperT] = None,
     ) -> Integral[Self, RespectT, LowerT, UpperT]:
         return Integral(self, respect, lower, upper)
