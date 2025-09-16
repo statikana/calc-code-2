@@ -5,7 +5,7 @@ from .. import *
 __all__ = ["Variable"]
 
 
-class Variable(AriNode):
+class Variable(ArithmaticNode):
     def __init__(self, name: str, value: Constant | None = None):
         self.name = name
         self.value = value

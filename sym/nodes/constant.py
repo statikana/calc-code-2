@@ -2,9 +2,9 @@ from .. import *
 
 
 __all__ = ["Constant"]
-  
 
-class Constant(AriNode):
+
+class Constant(ArithmaticNode):
     def __init__(self, value: float):
         self.value = value
 

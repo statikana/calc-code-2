@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TypeVar
 
-__all__ = ["Node", "NodeT"]
+__all__ = ["Node"]
 
 
 class Node:
@@ -9,13 +9,8 @@ class Node:
 
     def latex(
         self,
-    ) -> (
-        str
-    ):  # only defined for Node parent class, calls to children are brought to this method, which uses the child's latex method
+    ) -> str:
         return f"\\[\n{self.latex_inline()}\n\\]"
 
     def latex_inline(self) -> str:
         return NotImplemented
-
-
-NodeT = TypeVar("NodeT", bound=Node)

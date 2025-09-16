@@ -1,31 +1,43 @@
-from typing import Self, TypeAlias
-from .node import Node, NodeT
-from .operator import Add, Sub, Mul, Div, Pow, Derivative, Integral, ExpressionT, RespectT, OrderT
+from typing import Self, Optional
+from .node import Node
+from .operator import (
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Pow,
+    Derivative,
+    Integral
+)
 
 
-__all__ = ["AriNode"]
+__all__ = ["ArithmaticNode"]
+
 
 class ArithmaticNode(Node):
     """"""
-    def __add__(self, other: NodeT) -> Add[Self, NodeT]:
+
+    def __add__[OtherT: Node](self, other: OtherT) -> Add[Self, OtherT]:
         return Add(self, other)
 
-    def __sub__(self, other: NodeT) -> Sub[Self, NodeT]:
+    def __sub__[OtherT: Node](self, other: OtherT) -> Sub[Self, OtherT]:
         return Sub(self, other)
 
-    def __mul__(self, other: NodeT) -> Mul[Self, NodeT]:
+    def __mul__[OtherT: Node](self, other: OtherT) -> Mul[Self, OtherT]:
         return Mul(self, other)
 
-    def __truediv__(self, other: NodeT) -> Div[Self, NodeT]:
+    def __truediv__[OtherT: Node](self, other: OtherT) -> Div[Self, OtherT]:
         return Div(self, other)
 
-    def __pow__(self, other: NodeT) -> Pow[Self, NodeT]:
+    def __pow__[OtherT: Node](self, other: OtherT) -> Pow[Self, OtherT]:
         return Pow(self, other)
 
-    def derive(self, respect: RespectT, order: OrderT | None = None) -> Derivative[Self, RespectT, OrderT]:
+    def derive[RespectT: Node, OrderT: Node](
+        self, respect: RespectT, order: Optional[OrderT] = None
+    ) -> Derivative[Self, RespectT, OrderT]:
         return Derivative(self, respect, order)
-    
-    def integrate(self, respect: RespectT, lower: Node | None = None, upper: Node | None = None) -> Integral[Self, RespectT]:
+
+    def integrate[RespectT: Node, LowerT: Node, UpperT: Node](
+        self, respect: RespectT, lower: Optional[LowerT] = None, upper: Optional[UpperT] = None
+    ) -> Integral[Self, RespectT, LowerT, UpperT]:
         return Integral(self, respect, lower, upper)
-    
-AriNode: TypeAlias = ArithmaticNode
