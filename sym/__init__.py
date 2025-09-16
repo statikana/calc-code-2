@@ -7,3 +7,4 @@ from .nodes.variable import Variable
 from .nodes.integer import Integer
 from .nodes.monomial import Monomial
 from .nodes.polynomial import Polynomial
+from .nodes.matrix import Matrix

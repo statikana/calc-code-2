@@ -1,5 +1,4 @@
-from typing import Self
-from .. import *
+from .. import ArithmaticNode, Constant
 
 
 __all__ = ["Variable"]

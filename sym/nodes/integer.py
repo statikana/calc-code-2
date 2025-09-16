@@ -1,4 +1,4 @@
-from .. import *
+from .. import ArithmaticNode
 
 
 __all__ = ["Integer"]
