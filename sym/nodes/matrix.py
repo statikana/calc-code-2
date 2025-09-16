@@ -1,3 +1,4 @@
+from functools import cache
 from .. import ArithmaticNode, Node
 
 
@@ -11,6 +12,7 @@ class Matrix(ArithmaticNode):
         self.matrix = matrix
     
     @property  # does not ensure size safety, only checks first element of each dimension
+    @cache
     def shape(self) -> tuple[int, ...]:
         shape = []
 
