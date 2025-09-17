@@ -4,7 +4,7 @@ from .. import ArithmaticNode
 __all__ = ["Integer"]
 
 
-class Integer(ArithmaticNode):
+class Integer(ArithmaticNode, level=3):
     def __init__(self, value: int):
         self.value = value
 

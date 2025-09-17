@@ -4,13 +4,11 @@ from .. import ArithmaticNode, Node
 
 MatrixDimensionT = list[Node] | list["MatrixDimensionT"]
 
-class Matrix(ArithmaticNode):
-    def __init__(
-        self,
-        matrix: MatrixDimensionT
-    ):
+
+class Matrix(ArithmaticNode, level=3):
+    def __init__(self, matrix: MatrixDimensionT):
         self.matrix = matrix
-    
+
     @property  # does not ensure size safety, only checks first element of each dimension
     @cache
     def shape(self) -> tuple[int, ...]:
@@ -25,9 +23,9 @@ class Matrix(ArithmaticNode):
                 interest = interest[0]
             else:
                 break
-        
+
         return tuple(shape)
-    
+
     def to_latex_inline(self):
         shape = self.shape
         if len(shape) == 0:

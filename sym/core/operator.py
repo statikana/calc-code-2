@@ -20,11 +20,11 @@ __all__ = [
 ]
 
 
-class Operator(Node):
+class Operator(Node, level=1):
     """Represents an unresolved operation between two nodes."""
 
 
-class Add[LHSNodeT: Node, RHSNodeT: Node](Operator):
+class Add[LHSNodeT: Node, RHSNodeT: Node](Operator, level=1):
     def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
         self.lhs = lhs
         self.rhs = rhs
@@ -36,7 +36,7 @@ class Add[LHSNodeT: Node, RHSNodeT: Node](Operator):
         return f"{self.lhs.to_latex_inline()} + {self.rhs.to_latex_inline()}"
 
 
-class Sub[LHSNodeT: Node, RHSNodeT: Node](Operator):
+class Sub[LHSNodeT: Node, RHSNodeT: Node](Operator, level=1):
     def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
         self.lhs = lhs
         self.rhs = rhs
@@ -48,7 +48,7 @@ class Sub[LHSNodeT: Node, RHSNodeT: Node](Operator):
         return f"{self.lhs.to_latex_inline()} - {self.rhs.to_latex_inline()}"
 
 
-class Mul[LHSNodeT: Node, RHSNodeT: Node](Operator):
+class Mul[LHSNodeT: Node, RHSNodeT: Node](Operator, level=1):
     def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
         self.lhs = lhs
         self.rhs = rhs
@@ -60,7 +60,9 @@ class Mul[LHSNodeT: Node, RHSNodeT: Node](Operator):
         return f"{self.lhs.to_latex_inline()} * {self.rhs.to_latex_inline()}"
 
 
-class Product[*FactorT](Operator):  # TODO constraints for variac type parameter?
+class Product[*FactorT](
+    Operator, level=1
+):  # TODO constraints for variac type parameter?
     def __init__(self, factors: tuple[*FactorT]):
         self.factors: tuple[Node, ...] = factors  # type: ignore
 
@@ -71,7 +73,7 @@ class Product[*FactorT](Operator):  # TODO constraints for variac type parameter
         return " * ".join(map(lambda f: f.to_latex_inline(), self.factors))
 
 
-class Div[LHSNodeT: Node, RHSNodeT: Node]:
+class Div[LHSNodeT: Node, RHSNodeT: Node](Operator, level=1):
     def __init__(self, lhs: LHSNodeT, rhs: RHSNodeT):
         self.lhs = lhs
         self.rhs = rhs
@@ -83,7 +85,7 @@ class Div[LHSNodeT: Node, RHSNodeT: Node]:
         return f"\\frac{{{self.lhs.to_latex_inline()}}}{{{self.rhs.to_latex_inline()}}}"
 
 
-class Pow[BaseT: Node, ExponentT: Node]:
+class Pow[BaseT: Node, ExponentT: Node](Operator, level=1):
     def __init__(self, base: BaseT, exponent: ExponentT):
         self.base = base
         self.exponent = exponent
@@ -95,7 +97,7 @@ class Pow[BaseT: Node, ExponentT: Node]:
         return f"{self.base.to_latex_inline()}^{{{self.exponent.to_latex_inline()}}}"
 
 
-class Derivative[ExpressionT: Node, RespectT: Node, OrderT: Node](Operator):
+class Derivative[ExpressionT: Node, RespectT: Node, OrderT: Node](Operator, level=1):
     def __init__(
         self, expr: ExpressionT, respect: RespectT, order: OrderT | None = None
     ):
@@ -122,7 +124,9 @@ class Derivative[ExpressionT: Node, RespectT: Node, OrderT: Node](Operator):
             )
 
 
-class Integral[ExpressionT: Node, RespectT: Node, LowerT: Node, UpperT: Node](Operator):
+class Integral[ExpressionT: Node, RespectT: Node, LowerT: Node, UpperT: Node](
+    Operator, level=1
+):
     def __init__(
         self,
         expr: ExpressionT,

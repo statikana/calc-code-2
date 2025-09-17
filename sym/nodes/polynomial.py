@@ -3,7 +3,7 @@ from __future__ import annotations
 from .. import ArithmaticNode, Monomial
 
 
-class Polynomial(ArithmaticNode):
+class Polynomial(ArithmaticNode, level=5):
     def __init__(self, *terms: Monomial, sort: bool = True):
         if sort:
             terms = tuple(

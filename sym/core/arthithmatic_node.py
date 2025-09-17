@@ -6,7 +6,7 @@ from .operator import Add, Sub, Mul, Div, Pow, Derivative, Integral
 __all__ = ["ArithmaticNode"]
 
 
-class ArithmaticNode(Node):
+class ArithmaticNode(Node, level=2):
     """"""
 
     def __add__[OtherT: Node](self, other: OtherT) -> Add[Self, OtherT]:

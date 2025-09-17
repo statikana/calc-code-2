@@ -1,7 +1,7 @@
 from .. import ArithmaticNode, Constant, Pow, Variable, Integer
 
 
-class Monomial(ArithmaticNode):
+class Monomial(ArithmaticNode, level=4):
     def __init__(self, coefficient: Constant, *variables: Pow[Variable, Integer]):
         self.coefficient = coefficient
         self.variables = sorted(

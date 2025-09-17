@@ -4,7 +4,7 @@ from .. import ArithmaticNode, Constant
 __all__ = ["Variable"]
 
 
-class Variable(ArithmaticNode):
+class Variable(ArithmaticNode, level=4):
     def __init__(self, name: str, value: Constant | None = None):
         self.name = name
         self.value = value

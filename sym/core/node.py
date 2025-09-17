@@ -1,7 +1,8 @@
 from __future__ import annotations
+from abc import abstractmethod
 from typing import TypeVar
 
-__all__ = ["Node"]
+__all__ = ["Node", "NodeT"]
 
 
 class Node:
@@ -12,5 +13,13 @@ class Node:
     ) -> str:
         return f"\\[\n{self.to_latex_inline()}\n\\]"
 
+    @abstractmethod
     def to_latex_inline(self) -> str:
         return NotImplemented
+
+    def __init_subclass__(cls, level: int):
+        cls.level = level
+        super().__init_subclass__()
+
+
+NodeT = TypeVar("NodeT", bound=Node)
